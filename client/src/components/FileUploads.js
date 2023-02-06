@@ -17,9 +17,10 @@ const FileUpload = () => {
         e.preventDefault();
         const formData = new FormData();
         formData.append('file', file);
+        console.log(file);
 
         try {
-            const res = await axios.post('/upload', formData, {
+            const res = await axios.post('https://dollpriyanka-obscure-couscous-rvvvv9wqvr72p44p-5000.preview.app.github.dev/upload', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
