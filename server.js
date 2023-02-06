@@ -14,13 +14,45 @@ app.post('/upload', (req,res) => {
     }
 
     const file = req.files.file;
-    file.mv(`${__dirname}/client/public/uploads/${file.name}`, err => {
-        if(err){
-            console.error(err);
-            return res.status(500).send(err);
+    const data = Buffer.from(file.data).toString();
+    console.log(data);
+    const parsed = [];
+    const lines = data.split("\n");
+    for(let i = 0 ; i< lines.length; i++) {
+        const line = lines[i];
+
+        if(line == "") {
+            continue;
         }
-        res.json({ fileName: file.name, filePath:`/uploads/${file.name}`})
-    });
+
+        const content = line.split(" - ");
+        console.log("content", content);
+        const datetime = content[0];
+        const loglevel = content[1];
+        const transaction = JSON.parse(content[2]);
+
+        console.log(transaction.transactionId);
+        parsed.push({
+            timestamp: new Date(datetime).getTime(),
+            loglevel,
+            transactionId: transaction.transactionId,
+            err: transaction.err,
+        });
+    }
+    
+    return res.json(parsed);
+
+    
+
+    // console.log(file);
+    // return res.json("ok");
+    // file.mv(`${__dirname}/client/public/uploads/${file.name}`, err => {
+    //     if(err){
+    //         console.error(err);
+    //         return res.status(500).send(err);
+    //     }
+    //     res.json({ fileName: file.name, filePath:`/uploads/${file.name}`})
+    // });
 });
 
 app.listen(5000,() => console.log('Server Started...'));
