@@ -10,6 +10,21 @@ Develop a small UI in react, which will upload the file using the above API and 
 Develop an API in node.js, which takes a file and returns a parsed output as JSON.
 ```
 
+## Get Started
+
+1. Clone this repository
+```sh
+git clone https://github.com/dollpriyanka/Log_Parser_App.git
+```
+2. Go to the cloned directory
+3. Initialize the directory
+```sh
+npm init -y
+```
+4. Install dependencies
+```sh
+npm install
+```
 
 # Input File_Format
 ```sh
