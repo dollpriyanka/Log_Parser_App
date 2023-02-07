@@ -54,7 +54,7 @@ const FileUpload = () => {
 
     return (
         <Fragment>
-            {message ? <Message msg={message} /> : null}
+            {message ? <Message msg={message} onClose= {() => { setMessage('') }}/> : null}
             <form onSubmit={onSubmit}>
                 <div className='custom-file mb-4'>
                     <label class="form-label" htmlFor="customFile">{filename}</label>
