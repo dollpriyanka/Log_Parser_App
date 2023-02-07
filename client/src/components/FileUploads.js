@@ -25,6 +25,19 @@ const FileUpload = () => {
                     'Content-Type': 'multipart/form-data'
                 }
             });
+            fetch("https://dollpriyanka-obscure-couscous-rvvvv9wqvr72p44p-5000.preview.app.github.dev/download")
+                .then(res => res.blob())
+                .then(blob => {
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement("a");
+                    a.style.display = "none";
+                    a.href = url;
+                    a.download = "file.json";
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                    document.body.removeChild(a);
+                });
 
             const { fileName, filePath } = res.data;
 
@@ -41,7 +54,7 @@ const FileUpload = () => {
 
     return (
         <Fragment>
-            {message ? <Message msg={message} /> :null }
+            {message ? <Message msg={message} /> : null}
             <form onSubmit={onSubmit}>
                 <div className='custom-file mb-4'>
                     <label class="form-label" htmlFor="customFile">{filename}</label>
@@ -53,10 +66,10 @@ const FileUpload = () => {
             </form>
             {uploadedFile ? <div className="row mt-5">
                 <div className="col-md-6 m-auto">
-                    <h3 className="text-center">{ uploadedFile.fileName }</h3>
-                    <img src={uploadedFile.filePath} alt="" style={{width: '100%'}} />
+                    <h3 className="text-center">{uploadedFile.fileName}</h3>
+                    <img src={uploadedFile.filePath} alt="" style={{ width: '100%' }} />
                 </div>
-            </div> : null }
+            </div> : null}
         </Fragment>
     );
 };

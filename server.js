@@ -1,12 +1,17 @@
 const express = require('express');
 const cors = require('cors');
 const fileUpload = require('express-fileupload');
+const fs  = require('fs');
 
 
 const app = express();
 app.use(cors())
 
 app.use(fileUpload());
+
+app.get('/download', (req, res) => {
+    return res.download("./app-log.json");
+})
 
 app.post('/upload', (req,res) => {
     if(req.files === null) {
@@ -39,8 +44,12 @@ app.post('/upload', (req,res) => {
             err: transaction.err,
         });
     }
+    fs.writeFile("./app-log.json", JSON.stringify(parsed), (err) => {
+        const readstream = fs.createReadStream("./app-log.json");
+        readstream.pipe(res);
+    });
     
-    return res.json(parsed);
+    // return res.json(parsed);
 
     
 
